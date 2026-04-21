@@ -500,6 +500,57 @@ dream &lt;- read_xlsx(&quot;penguins.xlsx&quot;, sheet = &quot;Dream Island&quot
 </div>
 <div id="penguin-database" class="section level1">
 <h1>Penguin Database</h1>
+<div id="duckdb-connection" class="section level3">
+<h3>DuckDB Connection</h3>
+<pre class="r"><code>con &lt;- DBI::dbConnect(duckdb::duckdb())</code></pre>
+<p><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
+</div>
+<div id="writing-penguin-data" class="section level3">
+<h3>Writing Penguin Data</h3>
+<pre class="r"><code>dbWriteTable(con, &quot;penguins&quot;, penguins)</code></pre>
+<p><a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a></p>
+</div>
+<div id="dbplyr-connection" class="section level3">
+<h3>dbplyr Connection</h3>
+<pre class="r"><code>penguinsdb &lt;- tbl(con, &quot;penguins&quot;)</code></pre>
+<p><a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a></p>
+</div>
+<div id="average-body-mass" class="section level3">
+<h3>Average Body Mass</h3>
+<pre class="r"><code>penguinsdb %&gt;% group_by(species) %&gt;% summarize(
+  avg_mass = mean(body_mass_g, na.rm = TRUE)
+) %&gt;% kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">species</th>
+<th align="right">avg_mass</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Chinstrap</td>
+<td align="right">3733.088</td>
+</tr>
+<tr class="even">
+<td align="left">Gentoo</td>
+<td align="right">5076.016</td>
+</tr>
+<tr class="odd">
+<td align="left">Adelie</td>
+<td align="right">3700.662</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>penguinsdb %&gt;% group_by(species) %&gt;% summarize(
+  avg_mass = mean(body_mass_g, na.rm = TRUE)
+) %&gt;% show_query()</code></pre>
+<pre><code>## &lt;SQL&gt;
+## SELECT species, AVG(body_mass_g) AS avg_mass
+## FROM penguins
+## GROUP BY species</code></pre>
+<p><a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a></p>
+</div>
 </div>
 <div class="footnotes footnotes-end-of-document">
 <hr />
@@ -508,6 +559,10 @@ dream &lt;- read_xlsx(&quot;penguins.xlsx&quot;, sheet = &quot;Dream Island&quot
 <li id="fn2"><p>Problem 2 Complete<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 <li id="fn3"><p>Problem 3 Complete<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
 <li id="fn4"><p>Problem 4 Complete<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Problem 1 Complete<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>Problem 2 Complete<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>Problem 3 Complete<a href="#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p>Problem 4 Complete<a href="#fnref8" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 

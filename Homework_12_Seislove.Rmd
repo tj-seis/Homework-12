@@ -12,6 +12,8 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 library(tidyverse)
 library(knitr)
 library(readxl)
+library(DBI)
+library(duckdb)
 ```
 
 # Penguin Excel Spreadsheet
@@ -53,3 +55,41 @@ penguins %>% group_by(species) %>% summarize(
 ^[Problem 4 Complete]
 
 # Penguin Database
+
+### DuckDB Connection
+
+```{r}
+con <- DBI::dbConnect(duckdb::duckdb())
+```
+
+^[Problem 1 Complete]
+
+### Writing Penguin Data
+
+```{r}
+dbWriteTable(con, "penguins", penguins)
+```
+
+^[Problem 2 Complete]
+
+### dbplyr Connection
+
+```{r}
+penguinsdb <- tbl(con, "penguins")
+```
+
+^[Problem 3 Complete]
+
+### Average Body Mass
+
+```{r}
+penguinsdb %>% group_by(species) %>% summarize(
+  avg_mass = mean(body_mass_g, na.rm = TRUE)
+) %>% kable()
+
+penguinsdb %>% group_by(species) %>% summarize(
+  avg_mass = mean(body_mass_g, na.rm = TRUE)
+) %>% show_query()
+```
+
+^[Problem 4 Complete]
