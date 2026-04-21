@@ -2,17 +2,21 @@
 title: "Homework 12"
 author: "T.J. Seislove"
 date: "4/21/2026"
-output: html_document
+output:
+  html_document:
+    code_folding: hide
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 library(tidyverse)
 library(knitr)
 library(readxl)
 ```
 
 # Penguin Excel Spreadsheet
+
+### Data Tables
 
 ```{r}
 torgersen <- read_xlsx("penguins.xlsx", sheet = "Torgersen Island", na = "NA")
@@ -21,3 +25,31 @@ dream <- read_xlsx("penguins.xlsx", sheet = "Dream Island", na = "NA")
 ```
 
 ^[Problem 1 Complete]
+
+```{r}
+penguins <- bind_rows(torgersen, biscoe, dream)
+```
+
+^[Problem 2 Complete]
+
+### Bill Dimensions
+
+```{r}
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm, color = species)) +
+  geom_point() +
+  facet_wrap(facets = ~island)
+```
+
+^[Problem 3 Complete]
+
+### Body Mass
+
+```{r}
+penguins %>% group_by(species) %>% summarize(
+  avg_mass = mean(body_mass_g, na.rm = TRUE)
+) %>% kable()
+```
+
+^[Problem 4 Complete]
+
+# Penguin Database
