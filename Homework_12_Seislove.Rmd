@@ -1,0 +1,23 @@
+---
+title: "Homework 12"
+author: "T.J. Seislove"
+date: "4/21/2026"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(readxl)
+```
+
+# Penguin Excel Spreadsheet
+
+```{r}
+torgersen <- read_xlsx("penguins.xlsx", sheet = "Torgersen Island", na = "NA")
+biscoe <- read_xlsx("penguins.xlsx", sheet = "Biscoe Island", na = "NA")
+dream <- read_xlsx("penguins.xlsx", sheet = "Dream Island", na = "NA")
+```
+
+^[Problem 1 Complete]
